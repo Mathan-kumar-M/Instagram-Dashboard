@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Instagram Global Growth Dashboard 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --ig1:#f09433;--ig2:#e6683c;--ig3:#dc2743;--ig4:#cc2366;--ig5:#bc1888;
+  --card:rgba(255,255,255,0.05);--card-border:rgba(255,255,255,0.09);
+  --text:#f0f0f5;--muted:rgba(255,255,255,0.42);--light:rgba(255,255,255,0.07);
+  --divider:rgba(255,255,255,0.08);
+}
+html,body{min-height:100%;font-family:'Outfit',sans-serif;color:var(--text);}
+body{
+  background:linear-gradient(145deg,#0d0d1a 0%,#1a0d2e 40%,#0d1a1a 100%);
+  background-attachment:fixed;
+  min-height:100vh;
+}
+.dash{max-width:960px;margin:0 auto;padding:2.5rem 1.5rem;position:relative;}
+.glow1{position:fixed;top:-120px;right:-80px;width:420px;height:420px;background:radial-gradient(circle,rgba(188,24,136,0.18) 0%,transparent 70%);pointer-events:none;z-index:0;}
+.glow2{position:fixed;bottom:-100px;left:-60px;width:360px;height:360px;background:radial-gradient(circle,rgba(240,148,51,0.12) 0%,transparent 70%);pointer-events:none;z-index:0;}
+.dash-inner{position:relative;z-index:1;}
+
+.dash-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid var(--divider);gap:16px;flex-wrap:wrap;}
+.dash-title{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--text);line-height:1.2;}
+.dash-title span{background:linear-gradient(135deg,var(--ig1),var(--ig3),var(--ig5));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.dash-sub{font-size:13px;color:var(--muted);margin-top:6px;font-weight:300;}
+.ig-badge{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.07);border:1px solid var(--card-border);border-radius:40px;padding:8px 16px;font-size:12px;font-weight:500;color:var(--text);white-space:nowrap;flex-shrink:0;}
+.ig-badge-dot{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--ig1),var(--ig3),var(--ig5));display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ig-badge-dot svg{width:13px;height:13px;fill:white;}
+
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:2rem;}
+.kpi-card{background:var(--card);border:1px solid var(--card-border);border-radius:16px;padding:1.25rem;cursor:pointer;transition:all 0.25s ease;position:relative;overflow:hidden;}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--ig1),var(--ig5));opacity:0;transition:opacity 0.25s;}
+.kpi-card:hover,.kpi-card.active{background:rgba(255,255,255,0.09);border-color:rgba(255,255,255,0.14);}
+.kpi-card:hover::before,.kpi-card.active::before{opacity:1;}
+.kpi-label{font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px;}
+.kpi-value{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;background:linear-gradient(135deg,#fff,rgba(255,255,255,0.75));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;}
+.kpi-pill{display:inline-flex;align-items:center;font-size:11px;font-weight:500;padding:3px 9px;border-radius:20px;margin-top:8px;background:rgba(45,180,45,0.15);color:#7de87d;}
+.kpi-note{font-size:11px;color:var(--muted);margin-top:6px;font-weight:300;}
+
+.tabs{display:flex;gap:4px;background:rgba(255,255,255,0.05);border:1px solid var(--card-border);border-radius:14px;padding:4px;margin-bottom:1.5rem;overflow-x:auto;}
+.tab{flex:1;text-align:center;padding:9px 10px;border-radius:10px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;transition:all 0.2s;white-space:nowrap;}
+.tab.active{background:rgba(255,255,255,0.1);color:var(--text);border:1px solid rgba(255,255,255,0.12);}
+.tab:hover:not(.active){color:var(--text);background:rgba(255,255,255,0.05);}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+
+.sec-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.25rem;gap:12px;flex-wrap:wrap;}
+.sec-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:600;color:var(--text);}
+.sec-sub{font-size:12px;color:var(--muted);margin-top:3px;}
+.tag{font-size:11px;background:rgba(255,255,255,0.07);color:var(--muted);padding:4px 10px;border-radius:20px;border:1px solid var(--card-border);white-space:nowrap;flex-shrink:0;}
+
+.card{background:var(--card);border:1px solid var(--card-border);border-radius:16px;padding:1.5rem;transition:border-color 0.2s;}
+.card:hover{border-color:rgba(255,255,255,0.14);}
+
+.c-row{display:flex;align-items:center;gap:10px;padding:9px 8px;border-bottom:1px solid var(--divider);cursor:pointer;transition:background 0.15s;border-radius:10px;}
+.c-row:last-child{border-bottom:none;}
+.c-row:hover,.c-row.highlighted{background:rgba(255,255,255,0.05);}
+.c-num{font-size:11px;color:var(--muted);min-width:16px;font-weight:500;}
+.c-flag{font-size:17px;min-width:22px;}
+.c-name{font-size:13px;font-weight:500;color:var(--text);min-width:110px;}
+.c-track{flex:1;background:rgba(255,255,255,0.07);border-radius:6px;height:6px;overflow:hidden;}
+.c-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,var(--ig1),var(--ig3),var(--ig5));transition:width 0.9s cubic-bezier(.4,0,.2,1);}
+.c-val{font-size:12px;color:var(--text);font-weight:500;min-width:50px;text-align:right;}
+.c-pct{font-size:11px;color:var(--muted);min-width:36px;text-align:right;}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+
+.eng-row{display:flex;align-items:center;gap:10px;padding:11px 6px;border-bottom:1px solid var(--divider);cursor:pointer;transition:all 0.15s;border-radius:8px;}
+.eng-row:last-child{border-bottom:none;}
+.eng-row:hover{background:rgba(255,255,255,0.04);padding-left:10px;}
+.eng-label{font-size:13px;font-weight:500;color:var(--text);min-width:88px;}
+.eng-track{flex:1;background:rgba(255,255,255,0.07);border-radius:6px;height:6px;overflow:hidden;}
+.eng-fill{height:100%;border-radius:6px;transition:width 0.9s cubic-bezier(.4,0,.2,1);}
+.eng-val{font-size:12px;font-weight:600;min-width:36px;text-align:right;}
+
+.region-list{display:flex;flex-direction:column;gap:9px;margin-top:1rem;}
+.reg-row{display:flex;align-items:center;justify-content:space-between;}
+.reg-left{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text);}
+.reg-dot{width:9px;height:9px;border-radius:3px;flex-shrink:0;}
+.reg-pct{font-size:12px;font-weight:600;color:var(--text);}
+.chart-wrap{position:relative;width:100%;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+.kpi-card{animation:fadeUp 0.45s ease both;}
+.kpi-card:nth-child(1){animation-delay:0.05s;}
+.kpi-card:nth-child(2){animation-delay:0.12s;}
+.kpi-card:nth-child(3){animation-delay:0.19s;}
+.kpi-card:nth-child(4){animation-delay:0.26s;}
+
+.dash-footer{text-align:center;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--divider);font-size:11px;color:var(--muted);font-weight:300;letter-spacing:0.04em;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .dash{padding:1.5rem 1rem;}
+  .dash-title{font-size:22px;}
+  .kpi-grid{grid-template-columns:repeat(2,1fr);gap:10px;}
+  .kpi-value{font-size:22px;}
+  .two-col{grid-template-columns:1fr;}
+  .dash-header{flex-direction:column;align-items:flex-start;}
+  .tab{font-size:12px;padding:8px 8px;}
+  .c-name{min-width:80px;font-size:12px;}
+  .c-pct{display:none;}
+  .card{padding:1.1rem;}
+  .glow1,.glow2{display:none;}
+}
+
+@media(max-width:480px){
+  .dash{padding:1rem 0.75rem;}
+  .dash-title{font-size:19px;}
+  .kpi-grid{grid-template-columns:repeat(2,1fr);gap:8px;}
+  .kpi-card{padding:0.9rem;}
+  .kpi-value{font-size:19px;}
+  .kpi-label{font-size:10px;}
+  .tab{font-size:11px;padding:7px 5px;}
+  .c-name{min-width:68px;font-size:11px;}
+  .c-val{font-size:11px;min-width:42px;}
+  .eng-label{min-width:72px;font-size:12px;}
+  .ig-badge{font-size:11px;padding:6px 12px;}
+  .sec-title{font-size:15px;}
+  .card{padding:1rem 0.9rem;}
+}
+</style>
+</head>
+<body>
+<div class="glow1"></div>
+<div class="glow2"></div>
+<div class="dash">
+<div class="dash-inner">
+
+  <div class="dash-header">
+    <div>
+      <div class="dash-title">Instagram <span>Global Growth</span><br/>Dashboard 2026</div>
+      <div class="dash-sub">Worldwide platform statistics · March 2026 · Latest available data</div>
+    </div>
+    <div class="ig-badge">
+      <div class="ig-badge-dot">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      </div>
+      Live Report
+    </div>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card active" onclick="highlightKpi(this)">
+      <div class="kpi-label">Monthly active users</div>
+      <div class="kpi-value">3B</div>
+      <div class="kpi-pill">+72% since 2021</div>
+    </div>
+    <div class="kpi-card" onclick="highlightKpi(this)">
+      <div class="kpi-label">Daily Stories users</div>
+      <div class="kpi-value">500M+</div>
+      <div class="kpi-note">Active accounts per day</div>
+    </div>
+    <div class="kpi-card" onclick="highlightKpi(this)">
+      <div class="kpi-label">Ad audience reach</div>
+      <div class="kpi-value">1.9B</div>
+      <div class="kpi-note">4th largest globally</div>
+    </div>
+    <div class="kpi-card" onclick="highlightKpi(this)">
+      <div class="kpi-label">Projected ad revenue</div>
+      <div class="kpi-value">$42.5B</div>
+      <div class="kpi-note">2026 forecast</div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('countries')">Top Countries</div>
+    <div class="tab" onclick="switchTab('growth')">Growth Trend</div>
+    <div class="tab" onclick="switchTab('engagement')">Engagement</div>
+    <div class="tab" onclick="switchTab('demographics')">Demographics</div>
+  </div>
+
+  <div class="tab-panel active" id="tab-countries">
+    <div class="card">
+      <div class="sec-head">
+        <div>
+          <div class="sec-title">Top 10 countries by Instagram users</div>
+          <div class="sec-sub">Millions of users · % share of 3B global base</div>
+        </div>
+        <div class="tag">2026</div>
+      </div>
+      <div>
+        <div class="c-row highlighted" onmouseenter="this.classList.add('highlighted')" onmouseleave="this.classList.remove('highlighted')"><div class="c-num">1</div><div class="c-flag">🇮🇳</div><div class="c-name">India</div><div class="c-track"><div class="c-fill" style="width:0%" data-w="100%"></div></div><div class="c-val">472.6M</div><div class="c-pct">15.8%</div></div>
+        <div class="c-row" onmouseenter="this.classList.add('highlighted')" onmouseleave="this.classList.remove('highlighted')"><div class="c-num">2</div><div class="c-flag">🇺🇸</div><div class="c-name">United States</div><div class="c-track"><div class="c-fill" style="width:0%" data-w="38%"></div></div><div class="c-val">179.9M</div><div class="c-pct">6.0%</div></div>
+        <div class="c-row" onmouseenter="this.classList.add('highlighted')" onmouseleave="this.classList.remove('highlighted')"><div class="c-num">3</div><div class="c-flag">🇧🇷</div><div class="c-name">Brazil</div><div class="c-track"><div class="c-fill" style="width:0%" data-w="31%"></div></div><div class="c-val">147M</div><div class="c-pct">4.9%</div></div>
+        <div class="c-row" onmouseenter="this.classList.add('highlighted')" onmouseleave="this.classList.remove('highlighted')"><div class="c-num">4</div><div class="c-flag">🇮🇩</div><div class="c-name">Indonesia</div><div class="c-track"><div class="c-fill" style="width:0%" data-w="22%"></div></div><div class="c-val">103M</div><div class="c-pct">3.4%</div></div>
+        <div class="c-row" onmouseenter="this.classList.add('highlighted')" onmouseleave="this.classList.remove('highlighted')"><div class="c-num">5</div><div class="c-flag">🇹🇷</div><div class="c-name">Turkey</div><div class="c-track"><div class="c-fill" style="width:0%" data-w="12%"></div></div><div class="c-val">58.5M</div><div class="c-pct">2.0%</div></div>
+        <div class="c-row" onmouseenter="this.classList.add('highlighted')" onmouseleave="this.classList.remove('highlighted')"><div class="c-num">6</div><div class="c-flag">🇯🇵</div><div class="c-name">Japan</div><div class="c-track"><div class="c-fill" style="width:0%" data-w="12%"></div></div><div class="c-val">57.5M</div><div class="c-pct">1.9%</div></div>
+        <div class="c-row" onmouseenter="this.classList.add('highlighted')" onmouseleave="this.classList.remove('highlighted')"><div class="c-num">7</div><div class="c-flag">🇲🇽</div><div class="c-name">Mexico</div><div class="c-track"><div class="c-fill" style="width:0%" data-w="10%"></div></div><div class="c-val">48.8M</div><div class="c-pct">1.6%</div></div>
+        <div class="c-row" onmouseenter="this.classList.add('highlighted')" onmouseleave="this.classList.remove('highlighted')"><div class="c-num">8</div><div class="c-flag">🇬🇧</div><div class="c-name">United Kingdom</div><div class="c-track"><div class="c-fill" style="width:0%" data-w="7%"></div></div><div class="c-val">35M</div><div class="c-pct">1.2%</div></div>
+        <div class="c-row" onmouseenter="this.classList.add('highlighted')" onmouseleave="this.classList.remove('highlighted')"><div class="c-num">9</div><div class="c-flag">🇩🇪</div><div class="c-name">Germany</div><div class="c-track"><div class="c-fill" style="width:0%" data-w="7%"></div></div><div class="c-val">31.3M</div><div class="c-pct">1.0%</div></div>
+        <div class="c-row" onmouseenter="this.classList.add('highlighted')" onmouseleave="this.classList.remove('highlighted')"><div class="c-num">10</div><div class="c-flag">🇦🇷</div><div class="c-name">Argentina</div><div class="c-track"><div class="c-fill" style="width:0%" data-w="6%"></div></div><div class="c-val">28.9M</div><div class="c-pct">1.0%</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-growth">
+    <div class="card">
+      <div class="sec-head">
+        <div>
+          <div class="sec-title">User growth trajectory</div>
+          <div class="sec-sub">Global MAUs 2021–2026 · Bars = total users · Line = YoY %</div>
+        </div>
+        <div class="tag">2021–2026</div>
+      </div>
+      <div class="chart-wrap" style="height:260px;"><canvas id="growthChart"></canvas></div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-engagement">
+    <div class="two-col">
+      <div class="card">
+        <div class="sec-head">
+          <div>
+            <div class="sec-title">Engagement by format</div>
+            <div class="sec-sub">Avg engagement rate per post</div>
+          </div>
+        </div>
+        <div>
+          <div class="eng-row"><div class="eng-label">Reels</div><div class="eng-track"><div class="eng-fill" style="width:0%;background:linear-gradient(90deg,#f09433,#dc2743);" data-w="100%"></div></div><div class="eng-val" style="color:#f09433;">2.8%</div></div>
+          <div class="eng-row"><div class="eng-label">Carousels</div><div class="eng-track"><div class="eng-fill" style="width:0%;background:linear-gradient(90deg,#cc2366,#bc1888);" data-w="57%"></div></div><div class="eng-val" style="color:#cc2366;">1.6%</div></div>
+          <div class="eng-row"><div class="eng-label">Static posts</div><div class="eng-track"><div class="eng-fill" style="width:0%;background:rgba(255,255,255,0.25);" data-w="43%"></div></div><div class="eng-val" style="color:rgba(255,255,255,0.5);">1.2%</div></div>
+          <div class="eng-row"><div class="eng-label">Stories</div><div class="eng-track"><div class="eng-fill" style="width:0%;background:rgba(255,255,255,0.15);" data-w="25%"></div></div><div class="eng-val" style="color:rgba(255,255,255,0.4);">0.7%</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="sec-head">
+          <div>
+            <div class="sec-title">Regional user split</div>
+            <div class="sec-sub">Share of global 3B base</div>
+          </div>
+        </div>
+        <div style="height:150px;position:relative;"><canvas id="regionChart"></canvas></div>
+        <div class="region-list">
+          <div class="reg-row"><div class="reg-left"><div class="reg-dot" style="background:#f09433;"></div>Southern Asia</div><div class="reg-pct">25.7%</div></div>
+          <div class="reg-row"><div class="reg-left"><div class="reg-dot" style="background:#dc2743;"></div>South America</div><div class="reg-pct">13.6%</div></div>
+          <div class="reg-row"><div class="reg-left"><div class="reg-dot" style="background:#cc2366;"></div>North America</div><div class="reg-pct">11.0%</div></div>
+          <div class="reg-row"><div class="reg-left"><div class="reg-dot" style="background:#bc1888;"></div>SE Asia</div><div class="reg-pct">10.1%</div></div>
+          <div class="reg-row"><div class="reg-left"><div class="reg-dot" style="background:#8a3ab9;"></div>W. Asia</div><div class="reg-pct">7.6%</div></div>
+          <div class="reg-row"><div class="reg-left"><div class="reg-dot" style="background:rgba(255,255,255,0.2);"></div>Rest of world</div><div class="reg-pct">31.9%</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-demographics">
+    <div class="card">
+      <div class="sec-head">
+        <div>
+          <div class="sec-title">Global age demographics</div>
+          <div class="sec-sub">% of Instagram users by age group worldwide · 2026</div>
+        </div>
+        <div class="tag">Worldwide</div>
+      </div>
+      <div class="chart-wrap" style="height:200px;margin-top:1rem;"><canvas id="ageChart"></canvas></div>
+    </div>
+  </div>
+
+  <div class="dash-footer">Sources: DataReportal · Statistics · Meta Investor Reports · March 2026 &nbsp;|&nbsp; Designed with Maddy's assistant</div>
+</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+function highlightKpi(el){document.querySelectorAll('.kpi-card').forEach(c=>c.classList.remove('active'));el.classList.add('active');}
+function switchTab(name){
+  const names=['countries','growth','engagement','demographics'];
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',names[i]===name));
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('active',p.id==='tab-'+name));
+  if(name==='growth'&&!window.growthBuilt){buildGrowth();window.growthBuilt=true;}
+  if(name==='engagement'){buildRegion();setTimeout(()=>document.querySelectorAll('.eng-fill').forEach(b=>b.style.width=b.dataset.w),80);}
+  if(name==='demographics'&&!window.ageBuilt){buildAge();window.ageBuilt=true;}
+}
+setTimeout(()=>document.querySelectorAll('.c-fill').forEach(b=>b.style.width=b.dataset.w),350);
+function buildGrowth(){
+  new Chart(document.getElementById('growthChart'),{type:'bar',data:{labels:['2021','2022','2023','2024','2025','2026'],datasets:[{label:'MAUs',data:[1.39,1.48,1.58,1.74,2.0,3.0],backgroundColor:'rgba(240,148,51,0.2)',borderColor:'rgba(240,148,51,0.7)',borderWidth:1.5,borderRadius:6,yAxisID:'y'},{label:'YoY %',data:[null,6.5,6.8,10.1,14.9,50.0],type:'line',borderColor:'#dc2743',backgroundColor:'rgba(220,39,67,0.1)',fill:true,pointBackgroundColor:'#dc2743',pointRadius:5,pointHoverRadius:7,tension:0.4,yAxisID:'y1'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>ctx.datasetIndex===0?' '+ctx.raw+'B users':' '+ctx.raw+'% YoY'}}},scales:{y:{beginAtZero:false,min:1.0,ticks:{callback:v=>v.toFixed(1)+'B',font:{size:11,family:'Outfit'},color:'rgba(255,255,255,0.45)'},grid:{color:'rgba(255,255,255,0.05)'}},y1:{position:'right',ticks:{callback:v=>v+'%',font:{size:11,family:'Outfit'},color:'rgba(255,255,255,0.45)'},grid:{display:false}},x:{ticks:{font:{size:12,family:'Outfit'},color:'rgba(255,255,255,0.55)'},grid:{display:false}}}}});
+}
+function buildRegion(){
+  if(window.regionBuilt)return;window.regionBuilt=true;
+  new Chart(document.getElementById('regionChart'),{type:'doughnut',data:{labels:['S. Asia','S. America','N. America','SE Asia','W. Asia','Other'],datasets:[{data:[25.7,13.6,11.0,10.1,7.6,31.9],backgroundColor:['#f09433','#dc2743','#cc2366','#bc1888','#8a3ab9','rgba(255,255,255,0.15)'],borderWidth:0,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:false,cutout:'65%',plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' '+ctx.label+': '+ctx.raw+'%'}}}}});
+}
+function buildAge(){
+  new Chart(document.getElementById('ageChart'),{type:'bar',data:{labels:['13–17','18–24','25–34','35–44','45–54','55+'],datasets:[{data:[8.5,31.3,31.0,16.2,8.8,4.2],backgroundColor:['rgba(240,148,51,0.4)','rgba(220,39,67,0.9)','rgba(220,39,67,1)','rgba(204,35,102,0.75)','rgba(188,24,136,0.5)','rgba(138,58,185,0.4)'],borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' '+ctx.raw+'% of users'}}},scales:{x:{ticks:{callback:v=>v+'%',font:{size:11,family:'Outfit'},color:'rgba(255,255,255,0.45)'},grid:{color:'rgba(255,255,255,0.05)'}},y:{ticks:{font:{size:12,family:'Outfit'},color:'rgba(255,255,255,0.65)'},grid:{display:false}}}}});
+}
+</script>
+</body>
+</html>
